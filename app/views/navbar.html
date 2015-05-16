@@ -1,0 +1,149 @@
+<div data-ng-hide="loggedIn">
+    <nav class="navbar navbar-default row" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-ng-init="navCollapsed = true" data-ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" data-ng-class="!navCollapsed && 'in'" data-ng-click="navCollapsed = true">
+            <ul class="nav nav-pills"  data-ng-class="{'nav-stacked': !navCollapsed}">
+                <li class="hidden-sm hidden-xs">
+                    <a class="navbarlogo" href="#login"> <img src="images/logo.jpg" style="height:25px; width:60px;"></a>
+                </li>
+                <li data-ng-class="{ active: location.path() == '/login' }"><a href="#login">Home</a></li>
+                <li data-ng-class="{ active: location.path() == '/about' }"><a href="#about">About</a></li>
+                <li data-ng-class="{ active: location.path() == '/contact' }"><a href="#contact">Contact</a></li>
+            </ul>
+            <!--<h3 class="text-muted hidden-xs hidden-sm">Best Brains</h3>-->
+        </div>
+
+    </nav>
+</div>
+
+<div data-ng-show="loggedIn">
+    <nav class="navbar navbar-default row" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-ng-init="navCollapsed = true" data-ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" data-ng-class="!navCollapsed && 'in'">
+            <ul class="nav nav-pills" data-ng-class="{'nav-stacked': !navCollapsed}">
+                
+                <li data-ng-show="stUserData.ISSYSTEMADMIN || stUserData.ISSUPERUSER" class="hidden-xs">
+                    <a class="navbarlogo" href="#dashboard"> <img src="images/logo.jpg" style="height:25px; width:60px;"></a>
+                </li>
+                
+                <li data-ng-hide="stUserData.ISSYSTEMADMIN || stUserData.ISSUPERUSER" class="hidden-xs">
+                    <a class="navbarlogo" href="#student"> <img src="images/logo.jpg" style="height:25px; width:60px;"></a>
+                </li>
+                
+                <li data-ng-show="stUserData.ISSTUDENTADMIN">
+                    <form class="navbar-form" role="search" name="searchStudent">
+                        <div class="input-group" style="width:15em;">
+                            <input type="text" data-ng-keypress="takeToStudent();" class="form-control" data-ng-model="stSearchParams.filterText" 
+                            placeholder="Search Student" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+                
+                <li data-ng-show="stUserData.ISSYSTEMADMIN || stUserData.ISSUPERUSER" class="hidden-sm hidden-md hidden-lg">
+                    <a href="#dashboard">Dashboard</a>
+                </li>
+
+                <li data-ng-show="stUserData.ISSTUDENTADMIN" data-ng-class="{ active: location.path() == '/student' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#student">Student</a>
+                </li>
+                <li data-ng-show="stUserData.ISTEACHERADMIN" data-ng-class="{ active: location.path() == '/teacher' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#teacher">Teacher</a>
+                </li>
+                <li data-ng-show="stUserData.ISCLASSADMIN" data-ng-class="{ active: location.path() == '/class' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#class">Class</a>
+                </li>
+                <!--
+                <li data-ng-show="stUserData.ISPACKETADMIN" data-ng-class="{ active: location.path() == '/packets' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#packets">Packets</a>
+                </li>
+                -->
+                <li data-ng-show="stUserData.ISINVENTORYADMIN" data-ng-class="{ active: location.path() == '/inventory' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#inventory">Inventory</a>
+                </li>
+                
+                <li data-ng-show="(stUserData.ISKEYADMIN || stUserData.ISKEYREADONLY) && !stUserData.ISSYSTEMADMIN" 
+                    data-ng-class="{ active: location.path() == '/key' }" data-ng-click="navCollapsed = true">
+                    <a href="#key">Key</a>
+                </li>
+                <!--
+                <li data-ng-show="stUserData.ISLOCATIONADMIN && !stUserData.ISSYSTEMADMIN" data-ng-class="{ active: location.path() == '/reports' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#reports">Reports</a>
+                </li>-->      
+                <li data-ng-show="stUserData.ISPACKETADMIN && !stUserData.ISSYSTEMADMIN" data-ng-class="{ active: location.path() == '/packets' }" 
+                    data-ng-click="navCollapsed = true">
+                    <a href="#packets">Packets</a>
+                </li>
+                
+                <li data-ng-show="stUserData.ISSYSTEMADMIN || stUserData.ISLOCATIONADMIN" class="dropdown" 
+                data-ng-class="{ active: location.path() == '/location' || location.path() == '/user' || location.path() == '/role' 
+                               || location.path() == '/packets' || location.path() == '/reports' || location.path() == '/key'
+                               || location.path() == '/adhoc' }"  dropdown>
+                    <a href="#" class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#reports">Reports</a></li>
+                        <li data-ng-show="stUserData.ISSYSTEMADMIN"><a href="#adhoc">Ad-hoc</a></li>
+                        <li data-ng-show="stUserData.ISSYSTEMADMIN"><a href="#location">Location</a></li>  
+                        <li><a href="#user">User</a></li>
+                        <li data-ng-show="stUserData.ISSYSTEMADMIN"><a href="#role">Role</a></li>
+                        <li data-ng-show="stUserData.ISSYSTEMADMIN"><a href="#packets">Packets</a></li>
+                        <li data-ng-show="stUserData.ISSYSTEMADMIN"><a href="#key">Key</a></li>
+                    </ul>
+                </li>
+                
+                <li class="pull-right" data-ng-click="navCollapsed = true"><a href="#logout">Logout</a></li>
+                
+            </ul>
+                <!-- </ul>
+                <li class="pull-right" data-ng-click="navCollapsed = true"><a href="#admin">Admin</a></li>
+
+                    <li class="pull-right" data-ng-click="navCollapsed = true"><a href="#logout">Logout</a></li>
+                    <li class="dropdown">
+                        <a href="" data-toggle="dropdown" class="dropdown-toggle">Admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </li>
+                </ul>-->
+                <!--
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Admin <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#location">Location</a></li>
+                        <li><a href="#user">User</a></li>
+                        <li><a href="#role">Role</a></li>
+                    </ul>
+                </li>
+                -->
+
+            
+        </div>
+    </nav>
+</div>

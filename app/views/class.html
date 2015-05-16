@@ -1,0 +1,388 @@
+<!--<div class="pull-right">
+    <button class="btn btn-default" type="submit" data-ng-click="generate();"><i class="glyphicon glyphicon-file"></i>Generate Week Sheet</button>  
+</div>
+<br/>
+<br/>
+<br/>-->
+
+<div>
+    <tabset>
+        <tab heading="All" select="dayFilter.filterText=''"></tab>
+        <tab heading="Mon" select="dayFilter.filterText='Monday'"></tab>
+        <tab heading="Tues" select="dayFilter.filterText='Tuesday'"></tab>
+        <tab heading="Wed" select="dayFilter.filterText='Wednesday'"></tab>
+        <tab heading="Thurs" select="dayFilter.filterText='ThursDay'"></tab>
+        <tab heading="Fri" select="dayFilter.filterText='Friday'"></tab>
+        <tab heading="Sat" select="dayFilter.filterText='Saturday'"></tab>
+        <tab heading="Sun" select="dayFilter.filterText='Sunday'"></tab>
+        <div class="pull-right">
+            <button class="btn btn-default" type="submit" data-ng-click="generateMaterialSheet();">
+                <i class="glyphicon glyphicon-file"></i> 
+                Generate Material Sheet
+            </button>  
+        </div>
+    </tabset>
+</div>
+<br/>
+<div class="hidden-xs gridStylelong" ng-grid="gridOptionsSm"></div>
+<div class="hidden-sm hidden-md hidden-lg gridStyle" ng-grid="gridOptionsXs"></div>
+
+<script type="text/ng-template" id="materialSheet.html">
+    <form role="form" class="form-horizontal" data-ng-submit="submit()">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-file"></i>Excel</button>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="modal-body">
+            <div class="gridStylelong" ng-grid="gridOptionsMat"></div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="classSheet.html">
+    <form role="form" class="form-horizontal" data-ng-submit="submit()">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-print"></i>Print</button>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-6">
+                    Day &amp Time: {{stNewClass.DAY}}, {{stNewClass.STARTTIME}} {{stNewClass.startAmPm}}-{{stNewClass.ENDTIME}} {{stNewClass.endAmPm}}
+                </div>
+                <div class="col-xs-6 pull-right">
+                    <input type="text" class="form-control" datepicker-popup="mm/dd/yyyy" ng-model="stNewClass.CLASSDATE" 
+                    is-open="opened" data-ng-click="opened=true" close-text="Close" placeholder="Class Date" />
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                 <div class="col-xs-6">
+                    Teacher: {{stNewClass.TEACHER}}
+                </div>
+                <div class="col-xs-6 pull-right">
+                    Subject(s): <span data-ng-repeat="subject in stNewClass.Subjects">{{subject.CLASSSUBJECT}} </span>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="modal-body">
+            <accordion>
+                <accordion-group  data-ng-repeat="student in stNewClass.stStudent">
+                    <accordion-heading>
+                        <div>
+                            {{student.fullName}} <i class="pull-right glyphicon" 
+                            data-ng-class="{'glyphicon-chevron-down': student, 'glyphicon-chevron-right': !student}"></i>
+                        </div>
+                    </accordion-heading>
+
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="location" class="control-label" style="text-align:left;">Attendence</label>    
+                            <input data-ng-model="student.attendance" type="checkbox" /> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" data-ng-repeat="subject in student.Subjects">
+                        <div class="col-xs-12">
+                            <span class="control-label" style="text-align:left; font-weight:bold;">
+                                {{subject.subjectName}}, {{subject.packet}} <span data-ng-show="subject.midterm">Test (mid term)</span>
+                                <span data-ng-if="subject.packetName == 'Z'">Test{{subject.packetName}}</span>
+                            </span>
+                            <!--<span> - Current Level </span><span style="font-weight:bold;">{{subject.packet}}</span>-->
+                        </div>
+                        <!--
+                        <div class="col-xs-2">
+                            {{subject.packet}}
+                        </div>
+                        -->
+                        <div class="col-xs-2">
+                            <input type="checkbox" data-ng-model="subject.promote" data-ng-checked="student.attendance"> Promote
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="col-xs-5">
+                                <select class="form-control" data-ng-model="subject.changeLevelId"  
+                                data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:{ SUBJECTID : subject.subjectId }">
+                                    <option value="">-Level-</option>
+                                </select>
+                            </div>
+                                
+                            <div class="col-xs-7">
+                                <select class="form-control" data-ng-model="subject.changePacketId"  
+                                data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{ LEVELID : subject.changeLevelId }">
+                                    <option value="">-Packet-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <textarea class="form-control"  placeholder="Comments"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!--
+                    <div class="form-group">
+                        <label for="address" class="control-label col-xs-3" style="text-align:left;">Change</label>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1LEVEL"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='Math' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                                
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1PACKET"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stNewStudent.MATHLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <label for="subject2" class="control-label col-xs-12" style="text-align:left;">{{stNewClass.SUBJECT2}}</label>
+                        
+                        <div class="col-xs-2">
+                            {{student.SUBJECT2PACKET}}
+                        </div>
+                        <div class="col-xs-4">
+                            <input  type="checkbox" /> Promote
+                        </div>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1LEVEL"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='Math' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                                
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1PACKET"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stNewStudent.MATHLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                    </div>
+                    -->
+                    <!--
+                    <div class="form-group">
+                        <label for="subject2" class="control-label col-xs-12" style="text-align:left;">Comments</label>
+                        
+                        <div class="col-xs-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-xs-8">
+                            <textarea class="form-control" placeholder="Comments"></textarea>
+                        </div>
+                        <div class="col-xs-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label for="address" class="control-label col-xs-3" style="text-align:left;">Change</label>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1LEVEL"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='Math' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                                
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="student.SUBJECT1PACKET"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stNewStudent.MATHLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                    </div>
+                    -->
+                </accordion-group>
+             </accordion>           
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+    </form>
+    
+    <!--
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+            <div class="gridStylelong" ng-grid="gridClassSheet"></div>   
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+    </form>
+    -->
+    <!--
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+            <div class="form-group">
+                    <div class="col-xs-2">Student<span> | </span></div>
+                    <div class="col-xs-1">{{stNewClass.SUBJECT1}}<span> | </span></div>
+                    <div class="col-xs-2"><input type="checkbox" />Promote<span> | </span></div>
+                    <div class="col-xs-1">Change<span> | </span></div>
+                    <div class="col-xs-1">{{stNewClass.SUBJECT2}}<span> | </span></div>
+                    <div class="col-xs-2"><input type="checkbox" />Promote<span> | </span></div>
+                    <div class="col-xs-1">Change<span> | </span></div>
+                    <div class="col-xs-2">Comments</div>
+            </div>
+            
+            <div class="col-xs-12">
+                    <div class="col-xs-2">Samhita</div>
+                    <div class="col-xs-2">L6A-B</div>
+                    <div class="col-xs-1"><input type="checkbox" /></div>
+                    <div class="col-xs-1"><input type="text" class="model-input input-sm"/></div>
+                    <div class="col-xs-2">L6-A</div>
+                    <div class="col-xs-1"><input type="checkbox" /></div>
+                    <div class="col-xs-1"><input type="text" class="model-input input-sm"></div>
+                    <div class="col-xs-2"><textarea class="model-input input-sm"></textarea></div>
+            </div>
+            
+
+            
+            
+        </div>
+     
+            
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+    -->
+</script>
+
+<script type="text/ng-template" id="updateClass.html">
+    <div class="modal-header">
+        <h5>Add Class</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+        
+            <div class="form-group">
+                <label for="location" class="control-label col-xs-4" style="text-align:left;">Location</label>
+                <div class="col-xs-4" data-ng-show="stUserData.ALLLOCATIONS">
+                    <select class="form-control cols-xs-10" data-ng-model="stNewClass.LOCATIONID"  
+                    data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData"></select>
+                </div>
+                <div class="col-xs-4" data-ng-hide="stUserData.ALLLOCATIONS">
+                    <span>{{stUserData.LOCATION}}</span> 
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label for="weekday" class="control-label col-xs-4" style="text-align:left;">Day of Week</label>
+                <div class="col-xs-4">
+                    <select class="form-control cols-xs-10" data-ng-model="stNewClass.DAY"  
+                    data-ng-options="item.name as item.name for item in weekdays"></select>
+                 
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="starttime" class="control-label col-xs-4" style="text-align:left;">Start Time</label>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm" data-ng-model="stNewClass.STARTTIME" 
+                    data-ng-options="item.name as item.name for item in timings"></select>
+                </div>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm" data-ng-model="stNewClass.STARTAMPM"  
+                    data-ng-options="item.name as item.name for item in amPm"></select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="endtime" class="control-label col-xs-4" style="text-align:left;">End Time</label>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm"data-ng-model="stNewClass.ENDTIME"
+                    data-ng-options="item.name as item.name for item in timings"></select>
+                </div>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm" data-ng-model="stNewClass.ENDAMPM"
+                    data-ng-options="item.name as item.name for item in amPm"></select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject1" class="control-label col-xs-4" style="text-align:left;">Subject(s)</label>
+                <div data-ng-repeat="subject in stNewClass.Subjects">
+                    <div class="col-xs-4">
+                        <select class="form-control" ng-model="subject.CLASSSUBJECTID" id="subject" 
+                        ng-options="item.SUBJECTID as item.SUBJECTNAME for item in stSubjectData">
+                            <option value="">-Subject-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="form-group">
+                <label for="subject2" class="control-label col-xs-4" style="text-align:left;">Subject 2</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="stNewClass.CLASSSUBJECT2" id="subject2" 
+                    ng-options="item.SUBJECTID as item.SUBJECTNAME for item in stSubjectData"></select>
+                </div>
+            </div>
+            -->
+            <div class="form-group">
+                <label for="teacher" class="control-label col-xs-4" style="text-align:left;">Teacher</label>
+                <div class="col-xs-4">
+                    <select class="form-control" ng-model="stNewClass.TEACHERID" id="teacher" 
+                    ng-options="item.TEACHERID as item.FULLNAME for item in stTeacherData">
+                        <option value="">-Teacher-</option>
+                    </select>
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Room Number</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewClass.ROOMNUMBER" type="text" id="roomNumber" placeholder="Room Number" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteClass.html">
+    <div class="modal-header">
+        <h5>Delete Class</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want delete the class?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>

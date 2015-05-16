@@ -1,0 +1,115 @@
+<div class="hidden-xs gridStylelong" ng-grid="gridOptionsSm"></div>
+<div class="hidden-sm hidden-md hidden-lg gridStyle" ng-grid="gridOptionsXs"></div>
+
+<script type="text/ng-template" id="updateTeacher.html">
+    <div class="modal-header">
+        <h5>Add/Update Teacher</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                <label for="location" class="control-label col-xs-4" style="text-align:left;">Location</label>
+                <div class="col-xs-4" data-ng-show="stUserData.ALLLOCATIONS">
+                    <select class="form-control cols-xs-10" data-ng-model="stNewTeacher.LOCATIONID"  
+                    data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData"></select>
+                </div>
+                <div class="col-xs-4" data-ng-hide="stUserData.ALLLOCATIONS">
+                    <span>{{stUserData.LOCATION}}</span> 
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">First Name</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.FIRSTNAME" type="text" placeholder="First Name" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Last Name</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.LASTNAME" type="text" placeholder="Last Name" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Email</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.EMAIL" type="email" placeholder="Email" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Phone</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.PHONE" data-ui-mask="(999) 999-9999" type="phone" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Address</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.ADDRESS1" type="text" placeholder="Address" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Address 2</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewStudent.ADDRESS2" type="text" placeholder="Address 2" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">City</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.CITY" type="text" placeholder="City" />
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="starttime" class="control-label col-xs-4" style="text-align:left;">State</label>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm" data-ng-model="stNewTeacher.STATEID" 
+                    data-ng-options="item.STATEID as item.STATE for item in stStateData"></select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="control-label col-xs-4" style="text-align:left;">Zipcode</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewTeacher.ZIPCODE" type="text" placeholder="Zipcode" value="" />
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteTeacher.html">
+    <div class="modal-header">
+        <h5>Delete Teacher</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want delete the teacher?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>

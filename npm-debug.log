@@ -1,0 +1,18 @@
+5291 error Error: ENOENT, lstat '/Users/Ram/AngularApps/BestBrains/node_modules/grunt/node_modules/grunt-legacy-log/node_modules/underscore.string/test/test_underscore/objects.js'
+5292 error If you need help, you may report this *entire* log,
+5292 error including the npm and node versions, at:
+5292 error     <http://github.com/npm/npm/issues>
+5293 error System Darwin 14.0.0
+5294 error command "node" "/usr/local/bin/npm" "install" "karma-phantomjs-launcher" "karma-jasmine" "grunt-karma" "--save-dev"
+5295 error cwd /Users/Ram/AngularApps/BestBrains
+5296 error node -v v0.10.33
+5297 error npm -v 1.4.28
+5298 error path /Users/Ram/AngularApps/BestBrains/node_modules/grunt/node_modules/grunt-legacy-log/node_modules/underscore.string/test/test_underscore/objects.js
+5299 error fstream_path /Users/Ram/AngularApps/BestBrains/node_modules/grunt/node_modules/grunt-legacy-log/node_modules/underscore.string/test/test_underscore/objects.js
+5300 error fstream_type File
+5301 error fstream_class FileWriter
+5302 error code ENOENT
+5303 error errno 34
+5304 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/writer.js:287:26
+5304 error fstream_stack Object.oncomplete (evalmachine.<anonymous>:107:15)
+5305 verbose exit [ 34, true ]

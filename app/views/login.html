@@ -1,0 +1,33 @@
+<div class="row">
+	<div  ng-controller="LoginCtrl">
+		<div class="text-danger" style="text-align:center;" data-ng-show="displayInvalid">
+			Your login attempt is <em>not successful</em> - {{loginMessage}}, please try again.
+		</div>
+		<form name="loginForm" novalidate role="form" class="col-lg-4 col-sm-6 col-xs-offset-0 col-sm-offset-3 col-lg-offset-4">
+			<div>
+            	&nbsp;
+            </div>
+			<div class="input-group input-group-lg">
+                <span class="input-group-addon">
+                 	<span class="glyphicon glyphicon-user"></span>
+                </span>
+				<input id="userName" autoFocus ng-model="username" class="form-control" style="height:46px;padding:10px 16px;line-height:1.33em;" placeholder="User Name" type="text">
+			</div>
+            <div>
+            	&nbsp;
+            </div>
+			<div class="input-group input-group-lg">
+            	<span class="input-group-addon">
+     				<span class="glyphicon glyphicon-lock"></span>
+   				</span>
+				<input id="password" ng-model="password" class="form-control input-lg" style="height:46px;padding:10px 16px;line-height:1.33em;" placeholder="Password" type="password">
+			</div>
+            <div>
+            	&nbsp;
+            </div>
+			<div class="form-group">
+				<button id="login" data-ng-click="validateLogin(loginForm)" class="btn btn-primary btn-lg btn-block">Login</button>
+			</div>
+		</form>
+	</div>
+</div>

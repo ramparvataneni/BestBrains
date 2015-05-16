@@ -1,0 +1,41 @@
+<div class="gridStylelong" ng-grid="gridOptions"></div>
+
+<script type="text/ng-template" id="updateRole.html">
+    <div class="modal-header">
+        <h5>Add/Update Role</h5>
+    </div>
+    
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+        
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteRole.html">
+    <div class="modal-header">
+        <h5>Delete Role</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want to delete the Role?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>

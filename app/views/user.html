@@ -1,0 +1,106 @@
+<div class="gridStylelong" ng-grid="gridOptions"></div>
+
+<script type="text/ng-template" id="updateUser.html">
+    <div class="modal-header">
+        <h5>Add/Update User</h5>
+    </div>
+    
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="name" class="control-label col-xs-12" style="text-align:left;">Full Name</label>
+                <div class="col-xs-6">
+                    <input class="form-control" data-ng-model="stNewUser.LASTNAME" type="text" placeholder="Last Name" required />
+                </div>
+                <div class="col-xs-6">
+                    <input class="form-control" data-ng-model="stNewUser.FIRSTNAME" type="text" placeholder="First Name" required />
+                </div>        
+            </div>
+            
+            <div class="form-group">
+                <label for="contact" class="control-label col-xs-12" style="text-align:left;">Contact</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.EMAIL" type="email" placeholder="Email" required />
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.PHONE" data-ui-mask="(999) 999-9999" required/>
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.CELLPHONE" data-ui-mask="(999) 999-9999"/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="name" class="control-label col-xs-12" style="text-align:left;">User Account</label>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.USERNAME" type="text" placeholder="User Name" required />
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.PASSWORD" type="password" placeholder="Password" required />
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewUser.CONFIRMPASSWORD" type="password" placeholder="Confirm Password" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="control-label col-xs-12" style="text-align:left;">Location & Role</label>
+                <div class="col-xs-6" data-ng-show="stUserData.ALLLOCATIONS">
+                    <select class="form-control" data-ng-model="stNewUser.LOCATIONID"  
+                    data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData">
+                        <option value="">-Location-</option>
+                    </select>
+                </div>
+                <div class="col-xs-6" data-ng-hide="stUserData.ALLLOCATIONS">
+                    <span>{{stUserData.LOCATION}}</span> 
+                </div>
+                <div class="col-xs-6">
+                    <select class="form-control" data-ng-model="stNewUser.ROLEID"  
+                    data-ng-options="item.ROLEID as item.ROLENAME for item in stRoleData">
+                        <option value="">-User Role-</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!--
+            <div class="form-group">
+                <label for="location" class="control-label col-xs-12" style="text-align:left;">Location</label>
+                <div class="col-xs-6">
+                    <select class="form-control" data-ng-model="stNewUser.LOCATIONID"  
+                    data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData">
+                        <option value="">-Location-</option>
+                    </select>
+                </div>           
+            </div>
+            -->
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteUser.html">
+    <div class="modal-header">
+        <h5>Delete User</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want to delete the User?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>

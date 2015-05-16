@@ -1,0 +1,411 @@
+<div class="hidden-xs hidden-sm gridStylelong" ng-grid="gridOptionsSm"></div>
+<div class="hidden-md hidden-lg gridStyle" ng-grid="gridOptionsXs"></div>
+
+<script type="text/ng-template" id="updateStudent.html">
+    <div class="modal-header">
+        <h5>Add/Update Student</h5>
+    </div>
+    
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+            <accordion>
+                <accordion-group  data-ng-init="student=true"  is-open="student">
+                    <accordion-heading>
+                        <div>
+                            Student Information <i class="pull-right glyphicon" 
+                            data-ng-class="{'glyphicon-chevron-down': student, 'glyphicon-chevron-right': !student}"></i>
+                        </div>
+                    </accordion-heading>
+                    
+                    <div class="form-group">
+                        <label for="location" class="control-label col-xs-2" style="text-align:left;">Location</label>
+                        <div class="col-xs-4" data-ng-show="stUserData.ALLLOCATIONS">
+                            <select class="form-control" data-ng-model="stNewStudent.LOCATIONID"  
+                            data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData">
+                                <option value="">-Location-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4" data-ng-hide="stUserData.ALLLOCATIONS">
+                            <span>{{stUserData.LOCATION}}</span> 
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="control-label col-xs-12" style="text-align:left;">Full Name</label>
+                        <div class="col-xs-5">
+                            <input class="form-control" data-ng-model="stNewStudent.LASTNAME" type="text" placeholder="Last Name" required />
+                        </div>
+                        <div class="col-xs-5">
+                            <input class="form-control" data-ng-model="stNewStudent.FIRSTNAME" type="text" placeholder="First Name" required />
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" data-ng-model="stNewStudent.MIDDLENAME" type="text" placeholder="M.I" />
+                        </div>        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address" class="control-label col-xs-12" style="text-align:left;">Address</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.ADDRESS1" type="text" placeholder="Street Address" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.ADDRESS2" type="text" placeholder="Apartment/Suite" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input class="form-control" data-ng-model="stNewStudent.CITY" type="text" placeholder="City" />
+                        </div>
+                        <div class="col-xs-4">
+                            <select class="form-control input-sm" data-ng-model="stNewStudent.STATEID" 
+                            data-ng-options="item.STATEID as item.STATE for item in stStateData">
+                                <option value="">-State-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4">
+                            <input class="form-control" data-ng-model="stNewStudent.ZIPCODE" type="text" placeholder="Zipcode" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact" class="control-label col-xs-12" style="text-align:left;">Contact</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.EMAIL" type="email" placeholder="Email" required />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.PHONE" data-ui-mask="(999) 999-9999" required/>
+                        </div>
+                    </div>
+                
+                </accordion-group>
+                
+                <!--
+                <accordion-group  data-ng-init="parent=true"  is-open="parent">
+                    <accordion-heading>
+                        <div>
+                            Parent Information <i class="pull-right glyphicon" 
+                            data-ng-class="{'glyphicon-chevron-down': parent, 'glyphicon-chevron-right': !parent}"></i>
+                        </div>
+                    </accordion-heading>
+                    
+                    <div class="form-group">
+                        <label for="location" class="control-label col-xs-12" style="text-align:left;">Relationship</label>
+                        <div class="col-xs-4">
+                            <input type="checkbox"  data-ng-model="stNewStudent.PARENT.RELATIONSHIPID" name="father"/> Father
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="checkbox"  data-ng-model="stNewStudent.PARENT.RELATIONSHIPID" name="mother"/> Mother
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="checkbox"  data-ng-model="stNewStudent.PARENT.RELATIONSHIPID" name="other"/> Other
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parentname" class="control-label col-xs-12" style="text-align:left;">Full Name</label>
+                        <div class="col-xs-5">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.LASTNAME" type="text" placeholder="Last Name" required />
+                        </div>
+                        <div class="col-xs-5">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.FIRSTNAME" type="text" placeholder="First Name" required />
+                        </div>       
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="parentaddress" class="control-label" style="text-align:left;">Address</label> 
+                            <input type="checkbox" data-ng-model="stNewStudent.PARENT1.SAMEASABOVE" data-ng-change="getAboveAddress();" 
+                            data-ng-true-value="true" data-ng-false-value="false" /> Same As Above
+                        </div>
+                        
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.ADDRESS1" type="text" placeholder="Street Address" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.ADDRESS2" type="text" placeholder="Apartment/Suite" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.CITY" type="text" placeholder="City" />
+                        </div>
+                        <div class="col-xs-4">
+                            <select class="form-control input-sm" data-ng-model="stNewStudent.PARENT1.STATEID" 
+                            data-ng-options="item.STATEID as item.STATE for item in stStateData">
+                                <option value="">-State-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.ZIPCODE" type="text" placeholder="Zipcode" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact" class="control-label col-xs-12" style="text-align:left;">Contact</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.EMAIL" type="email" placeholder="Email" required />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" data-ng-model="stNewStudent.PARENT1.PHONE" data-ui-mask="(999) 999-9999" required/>
+                        </div>
+                    </div>
+                
+                </accordion-group>
+                -->
+                <accordion-group data-ng-init="academic=false" is-open="academic">
+                    <accordion-heading>
+                        <div>
+                            Academic Information <i class="pull-right glyphicon" 
+                            data-ng-class="{'glyphicon-chevron-down': academic, 'glyphicon-chevron-right': !academic}"></i>
+                        </div>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <label for="grade" class="control-label col-xs-12" style="text-align:left;">School & Grade</label>
+                        <div class="col-xs-4">
+                            <select class="form-control cols-xs-10" data-ng-model="stNewStudent.GRADEID"  
+                            data-ng-options="item.GRADEID as item.GRADENAME for item in stGradeData">
+                                <option value="">-Grade-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8">
+                            <input class="form-control" data-ng-model="stNewStudent.SCHOOL" type="text" placeholder="School" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="grade" class="control-label col-xs-12" style="text-align:left;">Enrolling Data</label>
+                        <div class="col-xs-4">
+                            <select class="form-control cols-xs-10" data-ng-model="stNewStudent.PAYMENTMETHODID"  
+                            data-ng-options="item.PAYMENTMETHODID as item.PAYMENTMETHOD for item in stPaymentData">
+                                <option value="">-Payment Method-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" datepicker-popup="mm/dd/yyyy" ng-model="stNewStudent.ENROLLMENTDATE" 
+                            is-open="opened" data-ng-click="opened=true" close-text="Close" placeholder="Enrollment Date" />
+                        </div>
+                        <div class="col-xs-1">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subjects" class="control-label col-xs-6" style="text-align:left;">Subject(s) Enrolling</label>
+                        <label for="subjects" class="control-label col-xs-4" style="text-align:left;">Starting Level</label>
+                        <label for="subjects" class="control-label col-xs-2" style="text-align:left;">Packet</label>
+                        
+                        <div class="col-xs-6">
+                            <input type="checkbox"  data-ng-model="stStudentSubjects.MATH" name="math"/> Math {{stStudentSubjects.MATH}}
+                        </div>
+                        
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.MATHLEVELID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='Math' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                                
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.MATHPACKETID"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stStudentSubjects.MATHLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input type="checkbox" data-ng-model="stStudentSubjects.ENGLISH" name="english" /> English
+                        </div>
+                        
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.ENGLISHLEVELID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='English' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.ENGLISHPACKETID"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stStudentSubjects.ENGLISHLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input type="checkbox" data-ng-model="stStudentSubjects.ABACUS" name="abacus" /> Abacus
+                        </div>
+                        
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.ABACUSLEVELID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='Abacus' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.ABACUSPACKETID"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stStudentSubjects.ABACUSLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input type="checkbox" data-ng-model="stStudentSubjects.GK" name="gk" /> GK
+                        </div>
+                        
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.GKLEVELID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLevelData | filter:SUBJECTNAME='GK' ">
+                                <option value="">-Level-</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <select class="form-control" data-ng-model="stStudentSubjects.GKPACKETID"  
+                            data-ng-options="item.PACKETID as item.PACKET for item in stPacketData | filter:{LEVELID:stStudentSubjects.GKLEVELID}">
+                                <option value="">-Packet-</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    
+                    <!--
+                    <div class="form-group">   
+                        <div class="col-xs-12">
+                            <div class="col-xs-4">
+                                <label for="english">
+                                    <input type="checkbox" class="checkbox" data-ng-model="stNewStudent.English" name="english" data-ng-true-value="true"
+                                    data-ng-false-value="false" /> English
+                                </label>
+                            </div>
+                            <div class="col-xs-8">
+                                <label for="level" class="control-label col-xs-2">Start Level</label>
+                                <div class="col-xs-4">
+                                    <select class="form-control model-input" data-ng-model="stNewStudent.ENGLISHLEVELID"  
+                                    data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                                    <select class="form-control model-input" data-ng-model="stNewStudent.ENGLISHPACKETID"  
+                                    data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">     
+                        <div class="col-xs-12">
+                            <div class="col-xs-4">
+                                <label for="abacus">
+                                    <input type="checkbox" class="checkbox" data-ng-model="stNewStudent.abacus" name="english" data-ng-true-value="true"
+                                    data-ng-false-value="false" /> Abacus
+                                </label>
+                            </div>
+                            <div class="col-xs-8">
+                                <label for="level" class="control-label col-xs-2">Start Level</label>
+                                <div class="col-xs-4">
+                                    <select class="form-control model-input" data-ng-model="stNewStudent.ABACUSLEVELID"  
+                                    data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                                    <select class="form-control model-input" data-ng-model="stNewStudent.ABACUSPACKETID"  
+                                    data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">       
+                        <div class="col-xs-4">
+                                <input type="checkbox" class="checkbox" data-ng-model="stNewStudent.gk" name="gk" data-ng-true-value="true"
+                                data-ng-false-value="false" /> GK
+                        </div>
+                        <div class="col-xs-8">
+                            <label for="level" class="control-label">Start Level</label>
+                            <select class="form-control model-input" data-ng-model="stNewStudent.GKLEVELID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                            <select class="form-control model-input" data-ng-model="stNewStudent.GKPACKETID"  
+                            data-ng-options="item.LEVELID as item.LEVELNAME for item in stLEVELData"></select>
+                        </div>
+                    </div>
+                    -->
+                    
+                    <div class="form-group">
+                        <label for="class" class="control-label col-xs-12" style="text-align:left;">Class(es) Assigned</label>
+                        <div class="col-xs-2">
+                            <label class="control-label">1.</label>
+                        </div>
+                        <div class="col-xs-10">
+                            <select class="form-control" data-ng-model="stStudentClasses.CLASS1ID"  
+                            data-ng-options="item.CLASSID as item.CLASS for item in stClassData">
+                                <option value="">-Class 1-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-2">
+                            <label class="control-label">2.</label>
+                        </div>
+                        <div class="col-xs-10">
+                            <select class="form-control" data-ng-model="stStudentClasses.CLASS2ID"  
+                            data-ng-options="item.CLASSID as item.CLASS for item in stClassData">
+                                <option value="">-Class 2-</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject2" class="control-label col-xs-12" style="text-align:left;">Comments</label>
+                        
+                        <div class="col-xs-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-xs-8">
+                            <textarea class="form-control" data-ng-model="stNewStudent.COMMENTS" placeholder="Comments"></textarea>
+                        </div>
+                        <div class="col-xs-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                
+                </accordion-group>
+            </accordion>
+                      
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteStudent.html">
+    <div class="modal-header">
+        <h5>Delete Student</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want to archive the Student?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>

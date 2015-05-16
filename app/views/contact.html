@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Contact Us</div>
+    <div class="panel-body">
+        <br/><br/>
+        <div class="col-xs-12">
+            <label>Email: <a href="mailto:info@bestbrains.com">info@bestbrains.com</a></label>
+            <label>Phone: <a href="tel:7036775143">7036775143</a></label>
+            <label>Address: 123 Fedex Fields, Chantilly VA 20151</label> 
+        </div>
+        <br/><br/>
+        <hr/>
+        <form role="form" class="form-horizontal" data-ng-submit="submit()">
+            <div class="form-group">
+                <label for="request" class="control-label col-xs-12" style="text-align:left;">Request Access to Best Brains Admin</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="control-label col-xs-12" style="text-align:left;">Branch Details</label>
+                <div class="col-xs-4 col-md-3">
+                    <select class="form-control" data-ng-model="stNewStudent.LOCATIONID"  
+                    data-ng-options="item.LOCATIONID as item.LOCATION for item in stLocationData">
+                        <option value="">-Location-</option>
+                    </select>
+                </div>
+                <div class="col-xs-4 col-md-3">
+                    <input class="form-control" data-ng-model="stAccountRequest.designation" type="text" placeholder="Designation" required />
+                </div>
+                <div class="col-xs-4 col-md-3">
+                    <input class="form-control" data-ng-model="stAccountRequest.supervisor" type="text" placeholder="Supervisor" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="name" class="control-label col-xs-12" style="text-align:left;">Full Name</label>
+                <div class="col-xs-5  col-md-3">
+                    <input class="form-control" data-ng-model="stNewStudent.LASTNAME" type="text" placeholder="Last Name" required />
+                </div>
+                <div class="col-xs-5 col-md-3">
+                    <input class="form-control" data-ng-model="stNewStudent.FIRSTNAME" type="text" placeholder="First Name" required />
+                </div>
+                <div class="col-xs-2">
+                    <input class="form-control" data-ng-model="stNewStudent.MIDDLENAME" type="text" placeholder="M.I" />
+                </div>        
+            </div>
+            
+            <div class="form-group">
+                      
+            </div>
+            
+            <div class="form-group">
+                <label for="name" class="control-label col-xs-12" style="text-align:left;">Requested Account</label>
+                <div class="col-xs-5">
+                    <input class="form-control" data-ng-model="stAccountRequest.userName" type="text" placeholder="User Name" required />
+                </div>       
+            </div>
+            <div class="form-group">
+                <div class="col-xs-5">
+                    <input class="form-control" data-ng-model="stAccountRequest.password" type="text" placeholder="Password" required />
+                </div>       
+            </div>
+            <div class="form-group">
+                <div class="col-xs-5">
+                    <input class="form-control" data-ng-model="stAccountRequest.confirmPassword" type="text" placeholder="Confirm Password" required />
+                </div>       
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <input type="submit" class="btn primary-btn" value="Submit" />
+            </div>
+        </form>  
+    </div>
+    
+</div>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html  ng-app="bestBrains">
+  <head>
+    <meta charset="utf-8">
+    <title>Best Brains Admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!--<link rel="stylesheet" href="styles/layout.css">-->
+    <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.css">
+    <!-- endbuild -->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+      <!-- Add your site or application content here -->
+      <div class="container" data-ng-controller="MainCtrl">
+          <div id="header" data-ng-include="'views/navbar.html'"></div>
+
+          <div ng-view=""></div>
+
+          <div class="footer">
+              <h6 style="text-align:center;"><span class="glyphicon glyphicon-copyright-mark"></span> 2015-2016 Best Brains</h6>
+          </div>
+      </div>
+
+
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <!--<script src="bower_components/json3/lib/json3.js"></script>-->
+    <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-grid/ng-grid-2.0.14.debug.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+    <!--<script src="bower_components/jquery.tablesorter/dist/js/jquery.tablesorter.min.js"></script>
+    <script src="bower_components/jquery.equalheights/jquery.equalheights.min.js"></script>-->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <!--<script src="scripts/hideshow.js"></script>-->
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/controllers/student.js"></script>
+        <script src="scripts/controllers/location.js"></script>
+        <script src="scripts/controllers/teacher.js"></script>
+        <script src="scripts/controllers/class.js"></script>
+        <script src="scripts/controllers/packet.js"></script>
+        <script src="scripts/controllers/inventory.js"></script>
+        <script src="scripts/controllers/key.js"></script>
+        <script src="scripts/controllers/user.js"></script>
+        <script src="scripts/controllers/role.js"></script>
+      
+        <script src="scripts/services/loginService.js"></script>
+        <script src="scripts/services/location.js"></script>
+        <script src="scripts/services/student.js"></script>     
+        <script src="scripts/services/teacher.js"></script>       
+        <script src="scripts/services/class.js"></script>        
+        <script src="scripts/services/packet.js"></script>   
+        <script src="scripts/services/inventory.js"></script>
+        <script src="scripts/services/location.js"></script>
+        <script src="scripts/services/state.js"></script>
+        <script src="scripts/services/country.js"></script>
+        <script src="scripts/services/subject.js"></script>
+        <script src="scripts/services/level.js"></script>
+        <script src="scripts/services/grade.js"></script>
+        <script src="scripts/services/payment.js"></script>
+        <script src="scripts/services/key.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/role.js"></script>
+        <!--<script src="scripts/directives/modal.js"></script>-->
+        
+        <!-- endbuild -->
+</body>
+</html>

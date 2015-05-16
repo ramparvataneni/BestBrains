@@ -1,0 +1,94 @@
+<div class="hidden-xs gridStylelong" ng-grid="gridOptionsSm"></div>
+<div class="hidden-sm hidden-md hidden-lg gridStyle" ng-grid="gridOptionsXs"></div>
+
+<script type="text/ng-template" id="updateLocation.html">
+    <div class="modal-header">
+        <h5>Add/Update Location</h5>
+    </div>
+    
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="name" class="control-label col-xs-4" style="text-align:left;">Location Name</label>
+                <div class="col-xs-6">
+                    <input class="form-control" data-ng-model="stNewLocation.LOCATION" type="text" placeholder="Location Name" required />
+                </div>       
+            </div>
+            
+            <div class="form-group">
+                <label for="address" class="control-label col-xs-12" style="text-align:left;">Address</label>
+                <div class="col-xs-6">
+                    <input class="form-control" data-ng-model="stNewLocation.ADDRESS1" type="text" placeholder="Building - Street" />
+                </div>
+                <div class="col-xs-6">
+                    <input class="form-control" data-ng-model="stNewLocation.ADDRESS2" type="text" placeholder="Apartment/Suite" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewLocation.CITY" type="text" placeholder="City" />
+                </div>
+                <div class="col-xs-4">
+                    <select class="form-control input-sm" data-ng-model="stNewLocation.COUNTRYID" 
+                    data-ng-options="item.COUNTRYID as item.COUNTRY for item in stCountryData">
+                        <option value="">-Country-</option>
+                    </select>
+                </div>
+                <div class="col-xs-2">
+                    <select class="form-control input-sm" data-ng-model="stNewLocation.STATEID" 
+                    data-ng-options="item.STATEID as item.STATE for item in stStateData">
+                        <option value="">-State-</option>
+                    </select>
+                </div>  
+                <div class="col-xs-2">
+                    <input class="form-control" data-ng-model="stNewLocation.ZIPCODE" type="text" placeholder="Zipcode" />
+                </div>     
+            </div>
+            
+            <div class="form-group">
+                <label for="contact" class="control-label col-xs-12" style="text-align:left;">Contact</label>
+                <div class="col-xs-8">
+                    <input class="form-control" data-ng-model="stNewLocation.EMAIL1" type="email" placeholder="Email" required />
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" data-ng-model="stNewLocation.PHONE1" data-ui-mask="(999) 999-9999" required/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-xs-8">
+                    <input class="form-control" data-ng-model="stNewLocation.WEBSITE" placeholder="Website" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Submit" />
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="deleteLocation.html">
+    <div class="modal-header">
+        <h5>Delete Location</h5>
+    </div>
+    <form role="form" class="form-horizontal" ng-submit="submit()">
+        <div class="modal-body">
+    
+            <div class="form-group">
+                Do you want to Delete the Location?
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <input type="submit" class="btn primary-btn" value="Yes" />
+        </div>
+
+    </form>
+
+</script>
